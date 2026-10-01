@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft. Orçamentos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <div id="ecraInicio" class="ativo">
+
+    <header>
+        <div>
+            <h1>🔧 Orçamentos</h1>
+            <p>Soft. Orçamentos <strong>v0.01</strong></p>
+        </div>
+    </header>
+
+    <main>
+
+        <button class="card principal" onclick="abrirNovoOrcamento()">
+            <span class="icone">＋</span>
+            <div>
+                <strong>Novo Orçamento</strong>
+                <small>Criar um novo orçamento</small>
+            </div>
+            <span>›</span>
+        </button>
+
+        <button class="card" onclick="abrirOrcamentos()">
+            <span class="icone">📄</span>
+            <div>
+                <strong>Orçamentos</strong>
+                <small>Ver e gerir orçamentos</small>
+            </div>
+            <span>›</span>
+        </button>
+
+        <button class="card" onclick="abrirMateriais()">
+            <span class="icone">🔧</span>
+            <div>
+                <strong>Materiais</strong>
+                <small>Consultar base de dados</small>
+            </div>
+            <span>›</span>
+        </button>
+
+        <section class="recentes">
+
+            <div class="titulo-secao">
+                <h2>Orçamentos Recentes</h2>
+                <span>Ver todos</span>
+            </div>
+
+            <div id="listaOrcamentos">
+
+                <div class="orcamento">
+                    <div>
+                        <strong>ORC_001</strong>
+                        <p>Gontim</p>
+                        <small>30/09/2026</small>
+                    </div>
+
+                    <div class="valor">
+                        <strong>54,50 €</strong>
+                        <span class="estado">● Em elaboração</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+   
+
+</div>
+
+ <nav>
+       <button onclick="voltarInicio()">⌂<span>Início</span></button>
+        <button>📄<span>Orçamentos</span></button>
+        <button>🔧<span>Materiais</span></button>
+        <button onclick="abrirMais()">•••<span>Mais</span></button>
+    </nav>
+
+<!-- ==================================================
+     ECRÃ - NOVO ORÇAMENTO
+=================================================== -->
+
+<section id="ecraNovoOrcamento" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarInicio()">‹</button>
+
+        <div>
+            <h1>Novo Orçamento</h1>
+            <p id="numeroOrcamento">ORC_---</p>
+        </div>
+    </div>
+
+    <div class="campo">
+        <label for="nomeOrcamento">Nome do Orçamento</label>
+        <input
+            type="text"
+            id="nomeOrcamento"
+            placeholder="Ex.: Reparação Rua Central"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="pesquisaMaterial">Pesquisar material</label>
+
+        <input
+            type="text"
+            id="pesquisaMaterial"
+            placeholder="🔎 Pesquisar por código ou descrição..."
+            oninput="pesquisarMateriais()"
+            autocomplete="off"
+        >
+
+        <div id="resultadosPesquisa"></div>
+    </div>
+
+    <div class="titulo-itens">
+        <h2>Itens do orçamento</h2>
+        <span id="contadorItens">0 itens</span>
+    </div>
+
+    <div id="listaItens"></div>
+
+    <div class="total-box">
+        <span>Total</span>
+        <strong id="totalOrcamento">0,00 €</strong>
+    </div>
+
+    <div class="campo">
+        <label for="observacoes">Observações</label>
+
+        <textarea
+            id="observacoes"
+            rows="4"
+            placeholder="Observações do orçamento..."
+        ></textarea>
+    </div>
+
+    <button
+        class="btn-guardar"
+        onclick="guardarOrcamento()"
+    >
+        Guardar Orçamento
+    </button>
+
+<!-- MODAL DE MATERIAL -->
+<div id="modalMaterial" class="modal-material">
+
+    <div class="modal-conteudo">
+
+        <div class="modal-topo">
+            <div>
+                <small id="modalCodigo"></small>
+                <h2 id="modalDescricao">Material</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-fechar"
+                onclick="fecharModal()"
+            >
+                ×
+            </button>
+        </div>
+
+        <div class="modal-info">
+            <div>
+                <span>Preço base</span>
+                <strong id="modalPreco">0,00 €</strong>
+            </div>
+
+            <div>
+                <span>Unidade</span>
+                <strong id="modalUnidade">-</strong>
+            </div>
+        </div>
+
+        <div class="modal-campo">
+            <label for="modalQuantidade">Quantidade</label>
+
+            <input
+                id="modalQuantidade"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+                oninput="atualizarPreview()"
+            >
+        </div>
+
+        <div class="modal-campo">
+            <label for="modalMargem">Margem %</label>
+
+            <input
+                id="modalMargem"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+                oninput="atualizarPreview()"
+            >
+        </div>
+
+        <div class="modal-preview">
+            <span>Valor unitário</span>
+            <strong id="previewUnitario">0,00 €</strong>
+
+            <span>Total</span>
+            <strong id="modalTotal">0,00 €</strong>
+        </div>
+
+        <button
+            type="button"
+            class="btn-adicionar-material"
+            onclick="adicionarMaterial()"
+        >
+            + Adicionar ao orçamento
+        </button>
+
+    </div>
+
+</div>
+<!-- FIM MODAL DE MATERIAL -->
+
+</section>
+
+<!-- =====================================================
+     ECRÃ - LISTA DE ORÇAMENTOS
+===================================================== -->
+
+<section id="ecraOrcamentos" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarDosOrcamentos()">‹</button>
+
+        <div>
+            <h1>Orçamentos</h1>
+            <p id="contadorOrcamentos">0 orçamentos</p>
+        </div>
+    </div>
+
+    <div class="pesquisa-orcamentos">
+        <input
+            type="text"
+            id="pesquisaOrcamento"
+            placeholder="🔎 Pesquisar por nome ou número..."
+            oninput="mostrarOrcamentos()"
+        >
+    </div>
+
+    <div class="filtros-orcamentos">
+    <button class="filtro-orcamento ativo" onclick="filtrarOrcamentos('Todos', this)">
+        Todos
+    </button>
+
+    <button class="filtro-orcamento" onclick="filtrarOrcamentos('Em elaboração', this)">
+        Em elaboração
+    </button>
+
+    <button class="filtro-orcamento" onclick="filtrarOrcamentos('Enviado', this)">
+        Enviados
+    </button>
+
+    <button class="filtro-orcamento" onclick="filtrarOrcamentos('Aceite', this)">
+        Aceites
+    </button>
+
+    <button class="filtro-orcamento" onclick="filtrarOrcamentos('Rejeitado', this)">
+        Rejeitados
+    </button>
+</div>
+
+    <div id="listaOrcamentos" class="lista-orcamentos"></div>
+
+    <button class="btn-novo-lista" onclick="abrirNovoAPartirDaLista()">
+        + Novo Orçamento
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     ECRÃ - DETALHE DO ORÇAMENTO
+===================================================== -->
+
+<section id="ecraDetalheOrcamento" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarListaOrcamentos()">‹</button>
+
+        <div>
+            <h1 id="detalheNumero">ORC_001</h1>
+            <p id="detalheNome"></p>
+        </div>
+    </div>
+
+    <div class="detalhe-info">
+
+        <div>
+            <span>Data</span>
+            <strong id="detalheData"></strong>
+        </div>
+
+        <div>
+    <span>Estado</span>
+    <button
+        id="detalheEstado"
+        class="estado-detalhe estado-clicavel"
+        onclick="abrirSeletorEstado()"
+    >
+        🟢 Em elaboração
+    </button>
+</div>
+
+    </div>
+
+<div id="seletorEstado" class="seletor-estado">
+
+    <div class="seletor-estado-caixa">
+
+        <div class="seletor-estado-topo">
+            <strong>Alterar estado</strong>
+            <button onclick="fecharSeletorEstado()">×</button>
+        </div>
+
+        <button onclick="alterarEstadoOrcamento('Em elaboração')">
+            <span>🟢</span>
+            <div>
+                <strong>Em elaboração</strong>
+                <small>Orçamento em preparação</small>
+            </div>
+        </button>
+
+        <button onclick="alterarEstadoOrcamento('Enviado')">
+            <span>🔵</span>
+            <div>
+                <strong>Enviado</strong>
+                <small>Orçamento enviado ao cliente</small>
+            </div>
+        </button>
+
+        <button onclick="alterarEstadoOrcamento('Aceite')">
+            <span>🟢</span>
+            <div>
+                <strong>Aceite</strong>
+                <small>Orçamento aceite pelo cliente</small>
+            </div>
+        </button>
+
+        <button onclick="alterarEstadoOrcamento('Rejeitado')">
+            <span>🔴</span>
+            <div>
+                <strong>Rejeitado</strong>
+                <small>Orçamento não aceite</small>
+            </div>
+        </button>
+
+    </div>
+
+</div>
+
+    <h2 class="titulo-itens-detalhe">
+        Itens do orçamento
+    </h2>
+
+    <div id="detalheItens"></div>
+
+    <div class="detalhe-total">
+        <span>Total</span>
+        <strong id="detalheTotal">0,00 €</strong>
+    </div>
+
+    <div
+        id="blocoObservacoesDetalhe"
+        class="detalhe-observacoes"
+    >
+        <strong>Observações</strong>
+        <p id="detalheObservacoes"></p>
+    </div>
+
+    <div class="acoes-detalhe">
+
+        <button
+            class="btn-secundario"
+            onclick="editarOrcamentoAtual()"
+        >
+            ✏️ Editar
+        </button>
+
+        <button
+            class="btn-pdf"
+            onclick="gerarPDFOrcamentoAtual()"
+        >
+            📄 Gerar PDF
+        </button>
+
+        <button
+            class="btn-eliminar"
+            onclick="eliminarOrcamentoAtual()"
+        >
+            Eliminar orçamento
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     MODAL - ADICIONAR MATERIAL
+=========================================== -->
+
+<div id="modalMaterial" class="modal-material">
+
+    <div class="modal-conteudo">
+
+        <div class="modal-cabecalho">
+            <div>
+                <small id="modalCodigo"></small>
+                <h2 id="modalDescricao">Material</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-fechar"
+                onclick="fecharModal()"
+            >
+                ×
+            </button>
+        </div>
+
+        <div class="modal-info">
+
+            <div class="modal-info-item">
+                <span>Preço base</span>
+                <strong id="modalPreco">0,00 €</strong>
+            </div>
+
+            <div class="modal-info-item">
+                <span>Unidade</span>
+                <strong id="modalUnidade">-</strong>
+            </div>
+
+        </div>
+
+        <div class="modal-campo">
+            <label for="modalQuantidade">Quantidade</label>
+
+            <input
+                type="number"
+                id="modalQuantidade"
+                min="0.01"
+                step="0.01"
+                value="1"
+                oninput="atualizarPreview()"
+            >
+        </div>
+
+        <div class="modal-campo">
+            <label for="modalMargem">Margem (%)</label>
+
+            <input
+                type="number"
+                id="modalMargem"
+                min="0"
+                step="1"
+                value="0"
+                oninput="atualizarPreview()"
+            >
+        </div>
+
+        <div class="modal-total">
+            <span>Total</span>
+            <strong id="modalTotal">0,00 €</strong>
+        </div>
+
+        <button
+            type="button"
+            class="btn-adicionar-material"
+            onclick="adicionarMaterial()"
+        >
+            + Adicionar ao orçamento
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ============================================= -->
+<!-- ECRÃ - MATERIAIS -->
+<!-- ============================================= -->
+
+<section id="ecraMateriais" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarDosMateriais()">‹</button>
+
+        <div>
+            <h1>Materiais</h1>
+            <p id="contadorMateriais">0 materiais</p>
+        </div>
+    </div>
+
+    <div class="pesquisa-orcamentos">
+        <input
+            type="text"
+            id="pesquisaListaMateriais"
+            placeholder="🔎 Pesquisar por código ou descrição..."
+            oninput="mostrarMateriais()"
+        >
+    </div>
+
+    <div id="listaMateriais"></div>
+
+    <button class="btn-novo-orcamento" onclick="novoMaterial()">
+        + Novo Material
+    </button>
+
+</section>
+
+<!-- ========================================== -->
+<!-- ECRÃ - MAIS -->
+<!-- ========================================== -->
+
+<section id="ecraMais" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarInicio()">‹</button>
+
+        <div>
+            <h1>Mais</h1>
+            <p>Definições e dados</p>
+        </div>
+    </div>
+
+    <div class="menu-mais">
+
+        <button class="item-mais" onclick="abrirBackup()">
+            <div>
+                <strong>💾 Cópia de segurança</strong>
+                <span>Exportar dados da aplicação</span>
+            </div>
+            <span>›</span>
+        </button>
+
+        <button class="item-mais" onclick="abrirSobre()">
+            <div>
+                <strong>ℹ️ Sobre</strong>
+                <span>Soft. Orçamentos v0.01</span>
+            </div>
+            <span>›</span>
+        </button>
+
+        <button class="item-mais perigo" onclick="abrirLimparDados()">
+            <div>
+                <strong>🗑️ Limpar dados</strong>
+                <span>Apagar os dados da aplicação</span>
+            </div>
+            <span>›</span>
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- ECRÃ - CÓPIA DE SEGURANÇA -->
+<!-- ========================================== -->
+
+<section id="ecraBackup" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarMais()">‹</button>
+
+        <div>
+            <h1>Cópia de segurança</h1>
+            <p>Guardar e restaurar dados</p>
+        </div>
+    </div>
+
+    <div class="menu-mais">
+
+        <button class="item-mais" onclick="exportarDados()">
+            <div>
+                <strong>💾 Exportar dados</strong>
+                <span>Guardar uma cópia dos materiais e orçamentos</span>
+            </div>
+            <span>›</span>
+        </button>
+
+        <button class="item-mais" onclick="selecionarBackup()">
+            <div>
+                <strong>📂 Importar dados</strong>
+                <span>Restaurar uma cópia de segurança</span>
+            </div>
+            <span>›</span>
+        </button>
+
+        <input
+            type="file"
+            id="inputBackup"
+            accept=".json,application/json"
+            style="display: none;"
+            onchange="importarDados(event)"
+        >
+
+    </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- ECRÃ - SOBRE -->
+<!-- ========================================== -->
+
+<section id="ecraSobre" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarDoSobre()">‹</button>
+
+        <div>
+            <h1>Sobre</h1>
+            <p>Informações da aplicação</p>
+        </div>
+    </div>
+
+    <div class="sobre-app">
+
+        <div class="sobre-logo">
+            <span>🔧</span>
+            <h2>Soft. Orçamentos</h2>
+            <p>Versão 0.01</p>
+        </div>
+
+        <div class="sobre-info">
+
+            <div class="sobre-linha">
+                <span>Aplicação</span>
+                <strong>Soft. Orçamentos</strong>
+            </div>
+
+            <div class="sobre-linha">
+                <span>Versão</span>
+                <strong>0.01</strong>
+            </div>
+
+            <div class="sobre-linha">
+                <span>Dados</span>
+                <strong>Armazenamento local</strong>
+            </div>
+
+        </div>
+
+        <p class="sobre-descricao">
+            Aplicação para criação e gestão de orçamentos,
+            materiais e preços.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- ECRÃ - LIMPAR DADOS -->
+<!-- ========================================== -->
+
+<section id="ecraLimparDados" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarDeLimparDados()">‹</button>
+
+        <div>
+            <h1>Limpar dados</h1>
+            <p>Repor a aplicação</p>
+        </div>
+    </div>
+
+    <div class="limpar-dados-conteudo">
+
+        <div class="aviso-limpar">
+            <div class="aviso-limpar-icone">⚠️</div>
+
+            <div>
+                <strong>Atenção</strong>
+                <p>
+                    Esta operação elimina os dados guardados
+                    nesta aplicação.
+                </p>
+            </div>
+        </div>
+
+        <div class="limpar-info">
+
+            <h3>Serão eliminados:</h3>
+
+            <div class="limpar-item">
+                <span>📄</span>
+                <div>
+                    <strong>Orçamentos</strong>
+                    <p>Todos os orçamentos guardados</p>
+                </div>
+            </div>
+
+            <div class="limpar-item">
+                <span>🔧</span>
+                <div>
+                    <strong>Alterações nos materiais</strong>
+                    <p>Materiais adicionados, eliminados ou alterados</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="recomendacao-backup">
+            <strong>💾 Recomendação</strong>
+            <p>
+                Cria uma cópia de segurança antes de eliminar
+                os dados, caso pretendas recuperá-los mais tarde.
+            </p>
+
+            <button onclick="abrirBackupDesdeLimpar()">
+                Criar cópia de segurança
+            </button>
+        </div>
+
+        <button
+            class="btn-eliminar-tudo"
+            onclick="confirmarLimpezaDados()"
+        >
+            🗑️ Eliminar todos os dados
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ============================================= -->
+<!-- ECRÃ - DETALHE DO MATERIAL -->
+<!-- ============================================= -->
+
+<section id="ecraDetalheMaterial" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="voltarListaMateriais()">‹</button>
+
+        <div>
+            <h1 id="detalheMaterialDescricao">Material</h1>
+            <p id="detalheMaterialCodigo"></p>
+        </div>
+    </div>
+
+    <div class="detalhe-info">
+
+        <div>
+            <span>Unidade</span>
+            <strong id="detalheMaterialUnidade"></strong>
+        </div>
+
+        <div>
+            <span>Preço</span>
+            <strong id="detalheMaterialPreco"></strong>
+        </div>
+
+    </div>
+
+    <div class="acoes-detalhe">
+
+        <button
+            class="btn-secundario"
+            onclick="editarMaterialAtual()"
+        >
+            ✏️ Editar material
+        </button>
+
+        <button
+            class="btn-eliminar"
+            onclick="eliminarMaterialAtual()"
+        >
+            Eliminar material
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ============================================= -->
+<!-- ECRÃ - EDITAR MATERIAL -->
+<!-- ============================================= -->
+
+<section id="ecraEditarMaterial" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="cancelarEdicaoMaterial()">‹</button>
+
+        <div>
+            <h1>Editar Material</h1>
+            <p id="editarMaterialCodigoTitulo"></p>
+        </div>
+    </div>
+
+    <div class="campo">
+        <label for="editarMaterialDescricao">Descrição</label>
+        <input
+            type="text"
+            id="editarMaterialDescricao"
+            placeholder="Descrição do material"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="editarMaterialCodigo">Código</label>
+        <input
+            type="text"
+            id="editarMaterialCodigo"
+            placeholder="Código do material"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="editarMaterialUnidade">Unidade</label>
+        <input
+            type="text"
+            id="editarMaterialUnidade"
+            placeholder="Ex.: Und., Mt, Hora"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="editarMaterialPreco">Preço (€)</label>
+        <input
+            type="number"
+            id="editarMaterialPreco"
+            min="0"
+            step="0.01"
+            placeholder="0,00"
+        >
+    </div>
+
+    <button
+        class="btn-guardar"
+        onclick="guardarEdicaoMaterial()"
+    >
+        Guardar alterações
+    </button>
+
+</section>
+
+<!-- ============================================= -->
+<!-- ECRÃ - NOVO MATERIAL -->
+<!-- ============================================= -->
+
+<section id="ecraNovoMaterial" class="ecra">
+
+    <div class="cabecalho-pagina">
+        <button class="btn-voltar" onclick="cancelarNovoMaterial()">‹</button>
+
+        <div>
+            <h1>Novo Material</h1>
+            <p>Adicionar à base de materiais</p>
+        </div>
+    </div>
+
+    <div class="campo">
+        <label for="novoMaterialDescricao">Descrição</label>
+        <input
+            type="text"
+            id="novoMaterialDescricao"
+            placeholder="Ex.: Válvula de esfera 1&quot;"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="novoMaterialCodigo">Código</label>
+        <input
+            type="text"
+            id="novoMaterialCodigo"
+            placeholder="Ex.: Mat08"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="novoMaterialUnidade">Unidade</label>
+        <input
+            type="text"
+            id="novoMaterialUnidade"
+            placeholder="Ex.: Und., Mt, Hora"
+        >
+    </div>
+
+    <div class="campo">
+        <label for="novoMaterialPreco">Preço (€)</label>
+        <input
+            type="number"
+            id="novoMaterialPreco"
+            min="0"
+            step="0.01"
+            placeholder="0,00"
+        >
+    </div>
+
+    <button
+        class="btn-guardar"
+        onclick="guardarNovoMaterial()"
+    >
+        Adicionar Material
+    </button>
+
+</section>
+
+<script src="app.js"></script>
+
+</body>
+</html>

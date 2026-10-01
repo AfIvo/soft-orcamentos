@@ -1,0 +1,1761 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef3f8;
+    color: #10233f;
+}
+
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    max-width: 480px;
+    min-height: 100vh;
+    margin: auto;
+    background: white;
+    padding-bottom: 85px;
+}
+
+.ecra {
+    display: none;
+}
+
+.ecra.ativo {
+    display: block;
+}
+
+header {
+    padding: 32px 24px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 6px 0 0;
+    color: #718096;
+}
+
+main {
+    padding: 0 20px;
+}
+
+
+/* CARDS */
+
+.card {
+    width: 100%;
+    border: 0;
+    background: #f7f9fc;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    text-align: left;
+    color: #10233f;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.card.principal {
+    background: #0876d1;
+    color: white;
+    padding: 24px 18px;
+}
+
+.card div {
+    flex: 1;
+}
+
+.card strong {
+    display: block;
+    font-size: 17px;
+}
+
+.card small {
+    display: block;
+    margin-top: 4px;
+    opacity: .75;
+}
+
+.icone {
+    font-size: 25px;
+}
+
+
+/* RECENTES */
+
+.recentes {
+    margin-top: 32px;
+}
+
+.titulo-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo-secao h2 {
+    font-size: 17px;
+}
+
+.titulo-secao span {
+    font-size: 14px;
+    color: #0876d1;
+}
+
+.orcamento {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 4px;
+    border-bottom: 1px solid #e6eaf0;
+}
+
+.orcamento p {
+    margin: 4px 0;
+}
+
+.orcamento small {
+    color: #718096;
+}
+
+.valor {
+    text-align: right;
+}
+
+.estado {
+    display: block;
+    margin-top: 12px;
+    color: #13994b;
+    font-size: 13px;
+}
+
+
+/* TOPO NOVO ORÇAMENTO */
+
+.topbar {
+    padding: 25px 20px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    border-bottom: 1px solid #e8edf3;
+}
+
+.topbar h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.topbar small {
+    color: #718096;
+}
+
+.voltar {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #eef3f8;
+
+    font-size: 28px;
+    color: #10233f;
+}
+
+
+/* FORMULÁRIO */
+
+.label {
+    display: block;
+
+    margin-top: 22px;
+    margin-bottom: 8px;
+
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #d8e0ea;
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+.input:focus {
+    border-color: #0876d1;
+}
+
+.textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+
+/* PESQUISA */
+
+.pesquisa {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d8e0ea;
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+.pesquisa:focus-within {
+    border-color: #0876d1;
+}
+
+.pesquisa input {
+    width: 100%;
+    padding: 14px 0;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+    font-size: 15px;
+}
+
+
+/* RESULTADOS PESQUISA */
+
+.resultados {
+    margin-top: 8px;
+
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.resultado {
+    padding: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: white;
+
+    border-bottom: 1px solid #edf1f5;
+
+    cursor: pointer;
+}
+
+.resultado:hover {
+    background: #f6f9fc;
+}
+
+.resultado strong {
+    display: block;
+}
+
+.resultado small {
+    color: #718096;
+}
+
+.resultado-preco {
+    text-align: right;
+    color: #0876d1;
+    font-weight: bold;
+}
+
+
+/* ITENS */
+
+.espacamento {
+    margin-top: 28px;
+}
+
+.lista-vazia {
+    padding: 25px 10px;
+
+    text-align: center;
+
+    color: #8a97a8;
+
+    background: #f8fafc;
+
+    border-radius: 12px;
+}
+
+.item {
+    padding: 14px 0;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    border-bottom: 1px solid #e7ebf0;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info strong {
+    display: block;
+}
+
+.item-info small {
+    display: block;
+    margin-top: 4px;
+
+    color: #718096;
+}
+
+.item-valor {
+    text-align: right;
+}
+
+.item-valor strong {
+    display: block;
+}
+
+.remover {
+    margin-top: 5px;
+
+    border: 0;
+    background: none;
+
+    color: #d94747;
+
+    font-size: 12px;
+}
+
+
+/* TOTAL */
+
+.total-box {
+    margin-top: 20px;
+    padding: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #10233f;
+    color: white;
+
+    border-radius: 14px;
+}
+
+.total-box strong {
+    font-size: 23px;
+}
+
+
+/* BOTÕES */
+
+.botao-guardar,
+.botao-adicionar {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #0876d1;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-top: 22px;
+}
+
+
+/* MODAL */
+
+.modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(8, 24, 45, .55);
+
+    z-index: 1000;
+
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.modal.aberto {
+    display: flex;
+}
+
+.modal-conteudo {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 24px;
+
+    background: white;
+
+    border-radius: 24px 24px 0 0;
+}
+
+.modal-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-topo h3 {
+    margin: 4px 0;
+}
+
+.modal-topo small {
+    color: #718096;
+}
+
+.modal-topo button {
+    border: 0;
+    background: #eef3f8;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+}
+
+.preco-base {
+    margin-top: 15px;
+    color: #607086;
+}
+
+.linha-campos {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.linha-campos div {
+    flex: 1;
+}
+
+.linha-campos label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.linha-campos input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #d8e0ea;
+    border-radius: 10px;
+
+    font-size: 16px;
+}
+
+.preview {
+    margin-top: 22px;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 18px;
+}
+
+.preview strong {
+    color: #0876d1;
+}
+
+
+/* MENU */
+
+nav {
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    max-width: 480px;
+
+    display: flex;
+    justify-content: space-around;
+
+    background: white;
+
+    border-top: 1px solid #e3e8ef;
+
+    padding: 10px 0;
+
+    z-index: 100;
+}
+
+nav button {
+    background: none;
+    border: 0;
+
+    color: #607086;
+
+    font-size: 20px;
+}
+
+nav span {
+    display: block;
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+
+@media (min-width: 700px) {
+
+    body {
+        padding: 30px;
+    }
+
+    .app {
+        border-radius: 24px;
+
+        box-shadow: 0 10px 40px rgba(0,0,0,.12);
+
+        overflow: hidden;
+    }
+}
+
+/* =====================================================
+   ECRÃS - ORÇAMENTOS
+===================================================== */
+
+.ecra {
+    display: none;
+    background: #ffffff;
+    min-height: 100vh;
+    padding: 24px 20px 100px;
+    box-sizing: border-box;
+}
+
+
+/* CABEÇALHO */
+
+.cabecalho-pagina {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.cabecalho-pagina h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #0d2344;
+}
+
+.cabecalho-pagina p {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: #607086;
+}
+
+.btn-voltar {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #eef5fb;
+    color: #0d5b9f;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+/* PESQUISA */
+
+.pesquisa-orcamentos {
+    margin-bottom: 25px;
+}
+
+.pesquisa-orcamentos input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 16px;
+    border: 1px solid #d6e0ec;
+    border-radius: 14px;
+    background: #f8fafc;
+    font-size: 15px;
+    outline: none;
+}
+
+.pesquisa-orcamentos input:focus {
+    border-color: #1680d8;
+}
+
+
+/* LISTA DE ORÇAMENTOS */
+
+.lista-orcamentos {
+    display: flex;
+    flex-direction: column;
+}
+
+.orcamento-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 17px 3px;
+    border-bottom: 1px solid #e1e7ef;
+    cursor: pointer;
+}
+
+.orcamento-lista strong {
+    display: block;
+    color: #0d2344;
+    font-size: 16px;
+}
+
+.orcamento-lista .nome-orcamento {
+    margin-top: 3px;
+    font-size: 14px;
+    color: #27384e;
+}
+
+.orcamento-lista .data-orcamento {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #718096;
+}
+
+.orcamento-lista-direita {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.orcamento-lista-direita strong {
+    font-size: 16px;
+}
+
+.estado-lista {
+    display: block;
+    margin-top: 7px;
+    color: #0ca34a;
+    font-size: 13px;
+}
+
+
+/* BOTÃO NOVO ORÇAMENTO */
+
+.btn-novo-lista {
+    width: 100%;
+    margin-top: 28px;
+    padding: 15px;
+    border: 0;
+    border-radius: 13px;
+    background: #1680d8;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   DETALHE DO ORÇAMENTO
+===================================================== */
+
+.detalhe-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.detalhe-info > div {
+    padding: 14px;
+    background: #f5f8fc;
+    border-radius: 12px;
+}
+
+.detalhe-info span {
+    display: block;
+    font-size: 12px;
+    color: #718096;
+    margin-bottom: 5px;
+}
+
+.detalhe-info strong {
+    color: #0d2344;
+    font-size: 14px;
+}
+
+.estado-detalhe {
+    color: #0ca34a !important;
+}
+
+
+.titulo-itens-detalhe {
+    margin: 0 0 12px;
+    font-size: 17px;
+    color: #0d2344;
+}
+
+
+/* ITENS */
+
+.item-detalhe {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e1e7ef;
+}
+
+.item-detalhe strong {
+    color: #0d2344;
+}
+
+.item-detalhe small {
+    display: block;
+    margin-top: 4px;
+    color: #718096;
+}
+
+.item-detalhe-valor {
+    text-align: right;
+    white-space: nowrap;
+}
+
+
+/* TOTAL */
+
+.detalhe-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #0d2344;
+    color: white;
+}
+
+.detalhe-total strong {
+    font-size: 23px;
+}
+
+
+/* OBSERVAÇÕES */
+
+.detalhe-observacoes {
+    margin-top: 25px;
+    padding: 16px;
+    background: #f5f8fc;
+    border-radius: 12px;
+}
+
+.detalhe-observacoes strong {
+    color: #0d2344;
+}
+
+.detalhe-observacoes p {
+    margin: 8px 0 0;
+    color: #394b61;
+    line-height: 1.5;
+}
+
+
+/* AÇÕES */
+
+.acoes-detalhe {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.acoes-detalhe button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-secundario {
+    border: 1px solid #1680d8;
+    background: white;
+    color: #1680d8;
+}
+
+.btn-pdf {
+    border: 0;
+    background: #1680d8;
+    color: white;
+}
+
+.btn-eliminar {
+    border: 0;
+    background: #fff0f0;
+    color: #d62828;
+}
+
+
+/* MENSAGEM QUANDO NÃO EXISTEM ORÇAMENTOS */
+
+.lista-vazia {
+    text-align: center;
+    padding: 45px 15px;
+    color: #718096;
+}
+
+.lista-vazia strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #0d2344;
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 700px) {
+
+    .ecra {
+        width: 460px;
+        margin: 0 auto;
+    }
+
+}
+
+/* ==========================================
+   CONTROLO DOS ECRÃS
+========================================== */
+
+#ecraInicio {
+    display: none;
+}
+
+#ecraInicio.ativo {
+    display: block;
+}
+
+.ecra {
+    display: none;
+}
+
+.ecra.ativo {
+    display: block;
+}
+
+/* ==========================================
+   NOVO ORÇAMENTO - FORMULÁRIO
+========================================== */
+
+#ecraNovoOrcamento {
+    padding: 24px 20px 100px;
+    box-sizing: border-box;
+}
+
+/* Campos do formulário */
+#ecraNovoOrcamento input,
+#ecraNovoOrcamento textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d7e0ea;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    background: #fff;
+    color: #10284a;
+    outline: none;
+}
+
+/* Quando carregamos num campo */
+#ecraNovoOrcamento input:focus,
+#ecraNovoOrcamento textarea:focus {
+    border-color: #1683dc;
+}
+
+/* Espaçamento dos campos */
+#ecraNovoOrcamento label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Nome do orçamento */
+#nomeOrcamento {
+    margin-bottom: 18px;
+}
+
+/* Pesquisa */
+#pesquisaMaterial {
+    margin-bottom: 18px;
+}
+
+/* Observações */
+#observacoes {
+    min-height: 90px;
+    resize: vertical;
+    margin-top: 8px;
+}
+
+/* Botão Guardar */
+#ecraNovoOrcamento button:not(.btn-voltar):not(.remover) {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 18px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Botão Guardar Orçamento */
+#ecraNovoOrcamento .btn-guardar {
+    background: #1683dc;
+    color: white;
+    margin-top: 18px;
+}
+
+/* ==========================================
+   MODAL DE MATERIAL
+========================================== */
+
+.modal-material {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 40, 74, 0.45);
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-material.aberto {
+    display: flex;
+}
+
+.modal-conteudo {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.20);
+}
+
+.modal-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-topo small {
+    color: #607086;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.modal-topo h2 {
+    margin: 0;
+    color: #10284a;
+    font-size: 22px;
+}
+
+.modal-fechar {
+    width: 40px !important;
+    height: 40px;
+    padding: 0 !important;
+    border: none;
+    border-radius: 50% !important;
+    background: #eef5fb !important;
+    color: #10284a !important;
+    font-size: 24px !important;
+    cursor: pointer;
+}
+
+.modal-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-info > div {
+    background: #f5f8fc;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.modal-info span {
+    display: block;
+    color: #607086;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.modal-info strong {
+    color: #10284a;
+}
+
+.modal-campo {
+    margin-bottom: 16px;
+}
+
+.modal-campo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.modal-campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #d7e0ea;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.modal-preview {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    background: #10284a;
+    color: white;
+    padding: 16px;
+    border-radius: 14px;
+    margin: 20px 0;
+}
+
+.modal-preview span {
+    opacity: 0.8;
+}
+
+.modal-preview strong {
+    text-align: right;
+}
+
+.btn-adicionar-material {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    background: #1683dc;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Espaço entre o Total e as Observações */
+.total-box + .campo {
+    margin-top: 22px;
+}
+
+/* Orçamentos recentes clicáveis */
+#ecraInicio .orcamento {
+    cursor: pointer;
+}
+
+#ecraInicio .orcamento:hover {
+    background: #f7f9fc;
+}
+
+/* ============================================= */
+/* LISTA DE MATERIAIS */
+/* ============================================= */
+
+#listaMateriais {
+    margin-top: 16px;
+}
+
+.material-lista {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 4px;
+
+    border-bottom: 1px solid #e1e8f0;
+
+    cursor: pointer;
+}
+
+.material-lista:hover {
+    background: #f8fafc;
+}
+
+.material-lista > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.material-lista strong {
+    font-size: 16px;
+    color: #08244a;
+}
+
+.material-lista small {
+    display: block;
+    font-size: 13px;
+    color: #66758f;
+}
+
+.material-lista-direita {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.material-lista-direita strong {
+    white-space: nowrap;
+}
+
+.material-lista-direita span {
+    font-size: 22px;
+    color: #006ee6;
+}
+
+
+/* BOTÃO NOVO MATERIAL */
+
+#ecraMateriais .btn-novo-orcamento {
+    width: 100%;
+    margin-top: 28px;
+    padding: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #1687df;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#ecraMateriais .btn-novo-orcamento:hover {
+    opacity: 0.9;
+}
+
+/* ============================================= */
+/* EDITAR MATERIAL */
+/* ============================================= */
+
+#ecraEditarMaterial .campo {
+    margin-bottom: 18px;
+}
+
+#ecraEditarMaterial .campo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #10233f;
+}
+
+#ecraEditarMaterial .campo input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+
+    border: 1px solid #d3deea;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #10233f;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+}
+
+#ecraEditarMaterial .campo input:focus {
+    border-color: #1687e0;
+}
+
+#ecraEditarMaterial .btn-guardar {
+    width: 100%;
+    height: 48px;
+
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #1687e0;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#ecraEditarMaterial .btn-guardar:hover {
+    opacity: 0.9;
+}
+
+/* ============================================= */
+/* NOVO MATERIAL */
+/* ============================================= */
+
+#ecraNovoMaterial .campo {
+    margin-bottom: 18px;
+}
+
+#ecraNovoMaterial .campo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #10233f;
+}
+
+#ecraNovoMaterial .campo input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+
+    border: 1px solid #d3deea;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #10233f;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+}
+
+#ecraNovoMaterial .campo input:focus {
+    border-color: #1687e0;
+}
+
+#ecraNovoMaterial .btn-guardar {
+    width: 100%;
+    height: 48px;
+
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #1687e0;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#ecraNovoMaterial .btn-guardar:hover {
+    opacity: 0.9;
+}
+
+/* ============================================= */
+/* ECRÃ MAIS */
+/* ============================================= */
+
+.menu-mais {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-mais {
+    width: 100%;
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 18px;
+
+    background: #f6f8fb;
+    border: none;
+    border-radius: 14px;
+
+    color: #10233f;
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.item-mais > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.item-mais strong {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.item-mais div span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #66758c;
+}
+
+.item-mais > span {
+    font-size: 24px;
+    color: #087ee5;
+}
+
+.item-mais:hover {
+    background: #eef4fa;
+}
+
+/* Opção perigosa */
+.item-mais.perigo {
+    margin-top: 12px;
+    background: #fff0f0;
+}
+
+.item-mais.perigo strong {
+    color: #e02020;
+}
+
+.item-mais.perigo div span {
+    color: #9b6060;
+}
+
+.item-mais.perigo > span {
+    color: #e02020;
+}
+
+
+/* ============================================= */
+/* ECRÃ SOBRE */
+/* ============================================= */
+
+.sobre-app {
+    margin-top: 30px;
+}
+
+.sobre-logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.sobre-logo > span {
+    display: block;
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.sobre-logo h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #10233f;
+}
+
+.sobre-logo p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #66758c;
+}
+
+.sobre-info {
+    background: #f6f8fb;
+    border-radius: 14px;
+    padding: 0 18px;
+}
+
+.sobre-linha {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #dbe3ec;
+}
+
+.sobre-linha:last-child {
+    border-bottom: none;
+}
+
+.sobre-linha span {
+    color: #66758c;
+    font-size: 14px;
+}
+
+.sobre-linha strong {
+    color: #10233f;
+    font-size: 14px;
+}
+
+.sobre-descricao {
+    margin-top: 24px;
+
+    color: #66758c;
+    font-size: 14px;
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+/* ============================================= */
+/* ECRÃ LIMPAR DADOS */
+/* ============================================= */
+
+.limpar-dados-conteudo {
+    margin-top: 28px;
+}
+
+/* Aviso principal */
+.aviso-limpar {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px;
+    margin-bottom: 26px;
+
+    background: #fff4e5;
+    border-radius: 14px;
+}
+
+.aviso-limpar-icone {
+    font-size: 24px;
+}
+
+.aviso-limpar strong {
+    display: block;
+    font-size: 16px;
+    color: #10233f;
+    margin-bottom: 5px;
+}
+
+.aviso-limpar p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #66758c;
+}
+
+
+/* Dados que serão eliminados */
+.limpar-info {
+    margin-bottom: 24px;
+}
+
+.limpar-info h3 {
+    margin: 0 0 14px;
+    font-size: 16px;
+    color: #10233f;
+}
+
+.limpar-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #dbe3ec;
+}
+
+.limpar-item > span {
+    font-size: 22px;
+    width: 30px;
+    text-align: center;
+}
+
+.limpar-item strong {
+    display: block;
+    font-size: 15px;
+    color: #10233f;
+}
+
+.limpar-item p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #66758c;
+}
+
+
+/* Recomendação de backup */
+.recomendacao-backup {
+    padding: 18px;
+    margin-top: 24px;
+
+    background: #f2f7fd;
+    border-radius: 14px;
+}
+
+.recomendacao-backup > strong {
+    display: block;
+    font-size: 15px;
+    color: #10233f;
+}
+
+.recomendacao-backup p {
+    margin: 7px 0 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #66758c;
+}
+
+.recomendacao-backup button {
+    width: 100%;
+    min-height: 46px;
+
+    background: white;
+    border: 1px solid #087ee5;
+    border-radius: 12px;
+
+    color: #087ee5;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* Botão de eliminação */
+.btn-eliminar-tudo {
+    width: 100%;
+    min-height: 50px;
+
+    margin-top: 20px;
+
+    background: #fff0f0;
+    border: none;
+    border-radius: 12px;
+
+    color: #e02020;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.btn-eliminar-tudo:hover {
+    background: #ffe5e5;
+}
+
+/* ============================================= */
+/* SELETOR DE ESTADO DO ORÇAMENTO */
+/* ============================================= */
+
+/* Escondido por defeito */
+.seletor-estado {
+    display: none;
+}
+
+/* Mostrar quando recebe a classe ativo */
+.seletor-estado.ativo {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    background: rgba(16, 35, 63, 0.35);
+}
+
+/* Caixa do seletor */
+.seletor-estado-caixa {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 22px;
+    padding-bottom: 30px;
+
+    background: #ffffff;
+
+    border-radius: 22px 22px 0 0;
+
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Cabeçalho */
+.seletor-estado-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+.seletor-estado-topo > strong {
+    font-size: 18px;
+    color: #10233f;
+}
+
+.seletor-estado-topo > button {
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f1f5f9;
+    color: #66758c;
+
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Opções */
+.seletor-estado-caixa > button {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    padding: 15px 12px;
+
+    border: none;
+    border-bottom: 1px solid #e1e7ef;
+
+    background: transparent;
+
+    text-align: left;
+    font-family: inherit;
+
+    cursor: pointer;
+}
+
+.seletor-estado-caixa > button:last-child {
+    border-bottom: none;
+}
+
+.seletor-estado-caixa > button > span {
+    font-size: 18px;
+}
+
+.seletor-estado-caixa > button div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.seletor-estado-caixa > button strong {
+    font-size: 15px;
+    color: #10233f;
+}
+
+.seletor-estado-caixa > button small {
+    font-size: 12px;
+    color: #66758c;
+}
+
+/* Estado no cartão do orçamento */
+.estado-clicavel {
+    border: none;
+    background: transparent;
+    padding: 0;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+/* ============================================= */
+/* FILTROS DOS ORÇAMENTOS */
+/* ============================================= */
+
+.filtros-orcamentos {
+    display: flex;
+    gap: 8px;
+
+    margin: 14px 0 18px;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    padding-bottom: 2px;
+}
+
+.filtros-orcamentos::-webkit-scrollbar {
+    display: none;
+}
+
+.filtro-orcamento {
+    flex: 0 0 auto;
+
+    padding: 9px 14px;
+
+    border: 1px solid #dbe3ec;
+    border-radius: 20px;
+
+    background: #ffffff;
+    color: #66758c;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.filtro-orcamento.ativo {
+    background: #087ee5;
+    border-color: #087ee5;
+    color: #ffffff;
+}
