@@ -1340,7 +1340,7 @@ function gerarPDFOrcamentoAtual() {
 
             .folha-pdf {
                 width: 210mm;
-                min-height: 297mm;
+            
                 padding: 15mm;
                 margin: 0;
                 background: #ffffff;
@@ -1552,11 +1552,9 @@ if (estilos) {
             unit: "mm",
             format: "a4",
             orientation: "portrait"
-        },
-
-        pagebreak: {
-            mode: ["avoid-all", "css", "legacy"]
         }
+
+        
     };
 
     html2pdf()
