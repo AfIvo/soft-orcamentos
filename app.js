@@ -1299,6 +1299,7 @@ function gerarPDFOrcamentoAtual() {
 
         const quantidade = Number(item.quantidade) || 0;
         const valorUnitario = Number(item.valorUnitario) || 0;
+
         const totalItem =
             Number(item.total) ||
             (quantidade * valorUnitario);
@@ -1323,148 +1324,137 @@ function gerarPDFOrcamentoAtual() {
         `
         : "";
 
-    const janela = window.open("", "_blank");
+    /*
+     * O conteúdo que será convertido em PDF.
+     * Trabalhamos diretamente com uma área A4.
+     */
+    const documentoPDF = document.createElement("div");
 
-    if (!janela) {
-        alert("O navegador bloqueou a janela de impressão.");
-        return;
-    }
+    documentoPDF.innerHTML = `
 
-    janela.document.write(`
-        <!DOCTYPE html>
-        <html lang="pt">
-        <head>
-            <meta charset="UTF-8">
-            <title>${escaparHTML(orcamento.numero)}</title>
+        <style>
 
-            <style>
+            * {
+                box-sizing: border-box;
+            }
 
-                * {
-                    box-sizing: border-box;
-                }
+            .folha-pdf {
+                width: 210mm;
+                min-height: 297mm;
+                padding: 15mm;
+                margin: 0;
+                background: #ffffff;
+                font-family: Arial, sans-serif;
+                color: #10294d;
+            }
 
-                body {
-                    font-family: Arial, sans-serif;
-                    color: #10294d;
-                    margin: 0;
-                    padding: 40px;
-                    background: white;
-                }
+            .cabecalho {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-bottom: 2px solid #1687df;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
 
-                .cabecalho {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    border-bottom: 2px solid #1687df;
-                    padding-bottom: 20px;
-                    margin-bottom: 30px;
-                }
+            .marca h1 {
+                margin: 0;
+                font-size: 28px;
+            }
 
-                .marca h1 {
-                    margin: 0;
-                    font-size: 28px;
-                }
+            .marca p {
+                margin: 5px 0 0;
+                color: #68778d;
+            }
 
-                .marca p {
-                    margin: 5px 0 0;
-                    color: #68778d;
-                }
+            .numero {
+                text-align: right;
+            }
 
-                .numero {
-                    text-align: right;
-                }
+            .numero strong {
+                font-size: 22px;
+            }
 
-                .numero strong {
-                    font-size: 22px;
-                }
+            .numero p {
+                margin: 5px 0;
+                color: #68778d;
+            }
 
-                .numero p {
-                    margin: 5px 0;
-                    color: #68778d;
-                }
+            .cliente {
+                margin-bottom: 30px;
+            }
 
-                .cliente {
-                    margin-bottom: 30px;
-                }
+            .cliente h2 {
+                margin-bottom: 5px;
+            }
 
-                .cliente h2 {
-                    margin-bottom: 5px;
-                }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 20px;
-                }
+            th {
+                background: #f1f6fb;
+                text-align: left;
+                padding: 12px;
+                border-bottom: 1px solid #d5dfeb;
+            }
 
-                th {
-                    background: #f1f6fb;
-                    text-align: left;
-                    padding: 12px;
-                    border-bottom: 1px solid #d5dfeb;
-                }
+            td {
+                padding: 12px;
+                border-bottom: 1px solid #e1e7ef;
+            }
 
-                td {
-                    padding: 12px;
-                    border-bottom: 1px solid #e1e7ef;
-                }
+            .centro {
+                text-align: center;
+            }
 
-                .centro {
-                    text-align: center;
-                }
+            .direita {
+                text-align: right;
+            }
 
-                .direita {
-                    text-align: right;
-                }
+            .total {
+                margin-top: 30px;
+                margin-left: auto;
+                width: 300px;
+                background: #10294d;
+                color: white;
+                padding: 18px 20px;
+                border-radius: 8px;
+                display: flex;
+                justify-content: space-between;
+                font-size: 20px;
+                font-weight: bold;
+            }
 
-                .total {
-                    margin-top: 30px;
-                    margin-left: auto;
-                    width: 300px;
-                    background: #10294d;
-                    color: white;
-                    padding: 18px 20px;
-                    border-radius: 8px;
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
+            .observacoes {
+                margin-top: 35px;
+                background: #f5f8fc;
+                padding: 20px;
+                border-radius: 8px;
+            }
 
-                .observacoes {
-                    margin-top: 35px;
-                    background: #f5f8fc;
-                    padding: 20px;
-                    border-radius: 8px;
-                }
+            .observacoes h3 {
+                margin-top: 0;
+            }
 
-                .observacoes h3 {
-                    margin-top: 0;
-                }
+            .observacoes p {
+                white-space: pre-wrap;
+            }
 
-                .observacoes p {
-                    white-space: pre-wrap;
-                }
+            .rodape {
+                margin-top: 50px;
+                padding-top: 15px;
+                border-top: 1px solid #d5dfeb;
+                font-size: 12px;
+                color: #7a8798;
+                text-align: center;
+            }
 
-                .rodape {
-                    margin-top: 50px;
-                    padding-top: 15px;
-                    border-top: 1px solid #d5dfeb;
-                    font-size: 12px;
-                    color: #7a8798;
-                    text-align: center;
-                }
+        </style>
 
-                @media print {
-                    body {
-                        padding: 15mm;
-                    }
-                }
-
-            </style>
-        </head>
-
-        <body>
+        <div class="folha-pdf">
 
             <div class="cabecalho">
 
@@ -1476,7 +1466,9 @@ function gerarPDFOrcamentoAtual() {
                 <div class="numero">
                     <strong>${escaparHTML(orcamento.numero)}</strong>
                     <p>Data: ${escaparHTML(orcamento.data)}</p>
-                    <p>${escaparHTML(orcamento.estado || "Em elaboração")}</p>
+                    <p>${escaparHTML(
+                        orcamento.estado || "Em elaboração"
+                    )}</p>
                 </div>
 
             </div>
@@ -1505,7 +1497,9 @@ function gerarPDFOrcamentoAtual() {
 
             <div class="total">
                 <span>Total</span>
-                <span>${formatarEuro(Number(orcamento.total) || 0)}</span>
+                <span>
+                    ${formatarEuro(Number(orcamento.total) || 0)}
+                </span>
             </div>
 
             ${observacoes}
@@ -1514,18 +1508,151 @@ function gerarPDFOrcamentoAtual() {
                 Documento gerado através do Soft. Orçamentos
             </div>
 
-        </body>
-        </html>
-    `);
+        </div>
+    `;
 
-    janela.document.close();
+    /*
+     * Passamos apenas a folha ao html2pdf.
+     * Assim o elemento convertido tem exatamente 210 × 297 mm.
+     */
+    const folhaPDF =
+        documentoPDF.querySelector(".folha-pdf");
 
-    janela.onload = function () {
-        janela.focus();
-        janela.print();
-    };
+        const estilos =
+    documentoPDF.querySelector("style");
+
+if (estilos) {
+    folhaPDF.insertBefore(
+        estilos.cloneNode(true),
+        folhaPDF.firstChild
+    );
 }
 
+    const nomeFicheiro =
+        `${orcamento.numero || "orcamento"}.pdf`;
+
+    const opcoesPDF = {
+
+        margin: 0,
+
+        filename: nomeFicheiro,
+
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff"
+        },
+
+        jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait"
+        },
+
+        pagebreak: {
+            mode: ["avoid-all", "css", "legacy"]
+        }
+    };
+
+    html2pdf()
+        .set(opcoesPDF)
+        .from(folhaPDF)
+        .outputPdf("blob")
+        .then(async function (pdfBlob) {
+
+            const ficheiro = new File(
+                [pdfBlob],
+                nomeFicheiro,
+                {
+                    type: "application/pdf"
+                }
+            );
+
+            /*
+             * No iPhone / iPad / Android:
+             * abrir folha nativa de partilha.
+             */
+            const dispositivoMovel =
+                /iPhone|iPad|iPod|Android/i
+                    .test(navigator.userAgent);
+
+            if (
+                dispositivoMovel &&
+                navigator.share &&
+                navigator.canShare &&
+                navigator.canShare({
+                    files: [ficheiro]
+                })
+            ) {
+
+                try {
+
+                    await navigator.share({
+                        files: [ficheiro],
+                        title:
+                            orcamento.numero ||
+                            "Orçamento"
+                    });
+
+                    return;
+
+                } catch (erro) {
+
+                    /*
+                     * Cancelar a partilha não é um erro.
+                     */
+                    if (erro.name === "AbortError") {
+                        return;
+                    }
+
+                    console.error(
+                        "Erro ao partilhar PDF:",
+                        erro
+                    );
+                }
+            }
+
+            /*
+             * PC ou browser sem Web Share:
+             * descarregar diretamente.
+             */
+            const url =
+                URL.createObjectURL(pdfBlob);
+
+            const link =
+                document.createElement("a");
+
+            link.href = url;
+            link.download = nomeFicheiro;
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 1000);
+
+        })
+        .catch(function (erro) {
+
+            console.error(
+                "Erro ao gerar PDF:",
+                erro
+            );
+
+            alert(
+                "Não foi possível gerar o PDF."
+            );
+        });
+}
 
 // =====================================================
 // SEGURANÇA PARA TEXTO INSERIDO PELO UTILIZADOR
